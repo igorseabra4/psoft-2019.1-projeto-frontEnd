@@ -6,7 +6,7 @@ class MuralDisciplina extends HTMLElement{
 
     connectedCallback() {
         this.id = this.getAttribute('id');
-        this.descricao = this.getAttribute('descricao');
+        this.name = this.getAttribute('name');
         this.render();
     }
 
@@ -14,7 +14,7 @@ class MuralDisciplina extends HTMLElement{
         this.$shadow.innerHTML = 
             `<link rel="stylesheet" href="message.css">
             <p class="descricao">${this.id}</p>
-            <p class="id">${this.descricao}</p>`;
+            <p class="id">${this.name}</p>`;
     }
 }
 
@@ -23,17 +23,14 @@ window.customElements.define('disciplina-texto', MuralDisciplina);
 const messages = [];
 
 async function get_messages() {
-    //let response = await fetch('http://localhost:8080/api/v1/courses/');
-    let response = await fetch('disciplinas_local.json');
+    let response = await fetch('http://localhost:8080/api/v1/courses/');
     let data = await response.json();
-    console.log(data);
     data.forEach(function (message) {
         let novo = document.createElement("disciplina-texto");
         novo.setAttribute('id', message.id);
-        novo.setAttribute('descricao', message.descricao);
+        novo.setAttribute('name', message.name);
         messages.push(novo);
     });
-    console.log(messages);
 }
 
 function render() {
@@ -42,7 +39,6 @@ function render() {
     messages.forEach(function (message) {
         $disciplinas.appendChild(message);
     });
-    console.log($disciplinas);
 }
 
 async function init() {
