@@ -23,7 +23,7 @@ window.customElements.define('disciplina-texto', MuralDisciplina);
 const messages = [];
 
 async function get_messages() {
-    let response = await fetch('http://localhost:8080/api/v1/courses/');
+    let response = await fetch('https://projeto-psoft-igor-victor.herokuapp.com/api/v1/courses/');
     let data = await response.json();
     data.forEach(function (message) {
         let novo = document.createElement("disciplina-texto");
