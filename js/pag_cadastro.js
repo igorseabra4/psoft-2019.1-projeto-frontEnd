@@ -10,8 +10,8 @@ async function create() {
     }
     console.log(user);
     
-	//let url = 'https://projeto-psoft-igor-victor.herokuapp.com/api/v1/auth/';
-    let url = 'localhost:8080/api/v1/auth/';
+	let url = 'https://projeto-psoft-igor-victor.herokuapp.com/api/v1/auth/';
+    //let url = 'localhost:8080/api/v1/auth/';
 
 	let myHeaders = new Headers();
 
