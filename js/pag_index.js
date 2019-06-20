@@ -24,3 +24,5 @@ async function create() {
 function createUser(){
     create();
 }
+
+document.getElementById("commit").addEventListener("click", createUser, false);
