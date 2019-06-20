@@ -10,12 +10,17 @@ async function login() {
 
 	myHeaders.append('Content-Type', 'application/json');
     
+    let lresult;
+
     let localtoken = await fetch(url, {
 		method: 'POST',
 		headers: myHeaders,
 		'body': JSON.stringify(user)
 	})
-    .then(result => result.json().token)
+    .then(result => {
+        lresult = result.json().token; 
+        return lresult;
+    })
     .catch(response => alert(response));
     
     localStorage.setItem('token', localtoken);
