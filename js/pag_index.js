@@ -11,11 +11,12 @@ async function login() {
 	myHeaders.append('Content-Type', 'application/json');
     
     let lresult;
+    let body =  JSON.stringify(user);
 
     let localtoken = await fetch(url, {
 		method: 'POST',
 		headers: myHeaders,
-		'body': JSON.stringify(user)
+		'body': body
 	})
     .then(result => {
         lresult = result.json().token; 
