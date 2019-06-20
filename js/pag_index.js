@@ -1,4 +1,4 @@
-async function create() {
+async function login() {
     let user = {
         email :document.getElementById("email").value,
         password :document.getElementById("password").value
@@ -21,8 +21,4 @@ async function create() {
     localStorage.setItem('token', localtoken);
 }
 
-function createUser(){
-    create();
-}
-
-document.getElementById("commit").addEventListener("click", createUser, false);
+document.getElementById("commit").addEventListener("click", login, false);
