@@ -17,15 +17,18 @@ async function create() {
 
 	myHeaders.append('Content-Type', 'application/json');
     
-	let data = await fetch(url, {
+    await fetch(url, {
 		method: 'POST',
 		headers: myHeaders,
 		'body': JSON.stringify(user)
-	})
-    .then(result => result.json())
-    .catch(result => console.log(result));
-    
-    console.log(data);
+    })
+    .then(function(response) {
+        if (response.status == 201)
+            window.location = 'index.html';
+        else
+            alert(responde.blob().json().message);
+    })
+    .catch(response => alert(response));
 }
 
 function createUser(){
