@@ -8,6 +8,8 @@ async function get_messages() {
     <tr>
         <th>ID</th>
         <th>Nome</th>
+        <th>Nota</th>
+        <th>Likes</th>
     </tr>`;
 
 	data.forEach(function (message) {
@@ -15,6 +17,8 @@ async function get_messages() {
         `<tr>
             <td>${message.id}</td>
             <td>${message.name}</td>
+            <td>${message.getGrade}</td>
+            <td>${message.getLikeCount}</td>
         </tr>`;
     });
     $disciplinas.innerHTML += `</table>`;

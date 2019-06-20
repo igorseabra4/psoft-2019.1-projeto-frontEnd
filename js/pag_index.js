@@ -10,16 +10,15 @@ async function create() {
 
 	myHeaders.append('Content-Type', 'application/json');
     
-	let data = await fetch(url, {
+    let localtoken = await fetch(url, {
 		method: 'POST',
 		headers: myHeaders,
 		'body': JSON.stringify(user)
 	})
-    .then(result => result.json());
-
-    data.catch(result => console.log(result));
+    .then(result => result.json().token)
+    .catch(response => alert(response));
     
-    console.log(data);
+    localStorage.setItem('token', localtoken);
 }
 
 function createUser(){
