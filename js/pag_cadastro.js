@@ -11,7 +11,6 @@ async function create() {
     console.log(user);
     
 	let url = 'https://projeto-psoft-igor-victor.herokuapp.com/api/v1/auth/';
-    //let url = 'localhost:8080/api/v1/auth/';
 
 	let myHeaders = new Headers();
 
@@ -26,7 +25,7 @@ async function create() {
         if (response.status == 201)
             window.location = 'index.html';
         else
-            alert(responde.blob().json().message);
+            alert(response.blob().json().message);
     })
     .catch(response => alert(response));
 }
