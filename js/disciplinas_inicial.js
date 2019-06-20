@@ -17,8 +17,8 @@ async function get_messages() {
         `<tr>
             <td>${message.id}</td>
             <td>${message.name}</td>
-            <td>${message.getGrade}</td>
-            <td>${message.getLikeCount}</td>
+            <td>${message.grade}</td>
+            <td>${message.likeCount}</td>
         </tr>`;
     });
     $disciplinas.innerHTML += `</table>`;
