@@ -24,5 +24,3 @@ async function create() {
 function createUser(){
     create();
 }
-
-document.getElementById("createUserButton").addEventListener("click", createUser, false);
