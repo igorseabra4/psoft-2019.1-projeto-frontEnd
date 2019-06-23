@@ -5,21 +5,20 @@ async function login() {
     }
     
 	let url = 'https://projeto-psoft-igor-victor.herokuapp.com/api/v1/auth/login';
-
-	let myHeaders = new Headers();
-
-	myHeaders.append('Content-Type', 'application/json');
     
-    let localtoken = await fetch(url, {
+    fetch(url, {
 		method: 'POST',
-		headers: myHeaders,
-		'body': JSON.stringify(user)
+		body: JSON.stringify(user),
+		headers: new Headers({
+            'Content-Type': 'application/json'
+        })
 	})
-    .then(result => result.json().token)
+    .then(result => {
+        let localtoken = result.json().token;
+        alert(localtoken);
+        localStorage.setItem('token', localtoken);
+    })
     .catch(response => alert(response));
-    
-    alert(localtoken);
-    localStorage.setItem('token', localtoken);
 }
 
 document.getElementById("commit").addEventListener("click", login, false);
