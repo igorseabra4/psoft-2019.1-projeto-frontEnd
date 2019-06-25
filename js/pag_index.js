@@ -9,11 +9,10 @@ async function login() {
 	fetch(url, {
 		method: 'POST',
 		body: JSON.stringify(user),
-		headers: new Headers
-		({
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		}),
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+			'Content-Type': 'application/json; charset=utf-8'
+		}
 	})
 	.then(result => {
 		let localtoken = result.json().token;
