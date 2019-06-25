@@ -25,4 +25,4 @@ async function login() {
   }
 }
 
-document.getElementById("commit").addEventListener("click", login, false);UP
+document.getElementById("commit").addEventListener("click", login, false);
