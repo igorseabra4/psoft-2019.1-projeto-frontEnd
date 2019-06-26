@@ -1,9 +1,13 @@
-async function login() {
+function login() {
   let user = {
     email :document.getElementById("email").value,
     password :document.getElementById("password").value
   }
 
+  sendLogin(user);
+}
+
+async function sendLogin(user) {
   let url = 'https://projeto-psoft-igor-victor.herokuapp.com/api/v1/auth/login';
 
   try {
