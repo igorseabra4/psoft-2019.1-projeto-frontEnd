@@ -8,16 +8,17 @@ body {
 
   #disciplinas {
         
-          display: table;	
-	  width: 100%; 
-	  background: #fff;
-	  margin: 0;
-	  box-sizing: border-box; 
-	  background: #dad8d8;
-	margin: 0;
-		padding: 20px;
-		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-	   	font-weight: 300;
+       		display: block;
+	 	width: auto;
+	 	background: #649bef;
+	 	height: auto;
+	 	padding-left: 10px;
+	 	color: #fff;
+	 	font-size: 20px;
+	 	line-height: 55px;
+	 	text-shadow: 1px 1px 1px rgba(0,0,0,.3);
+	 	box-sizing: border-box;
+	
  }
 
   
