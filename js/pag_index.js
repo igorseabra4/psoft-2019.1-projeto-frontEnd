@@ -17,6 +17,7 @@ async function sendLogin(user){
                 'Content-Type':'application/json;charset=utf-8'
             }
         });
+        
         let json = await response.json();
 
         if (response.status == 200) {

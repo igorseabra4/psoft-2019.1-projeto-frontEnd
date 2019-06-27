@@ -12,6 +12,17 @@ async function get_disciplinas_substring(str) {
     .then(data => preenche_tabela(data));
 }
 
+// essa funcao provavelmente vai sair daqui, ja que a lista que ela retorna eh diferente e precisa de auth
+async function get_disciplinas_ranking() {
+    await fetch(urlbase + '/rank', {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+    })
+    .then(response => response.json())
+    .then(data => preenche_tabela(data));
+}
+
 function preenche_tabela(disciplinas){
 	let $disciplinas = document.getElementById("disciplinas");
     $disciplinas.innerHTML =
@@ -19,16 +30,12 @@ function preenche_tabela(disciplinas){
     <tr>
         <th>ID</th>
         <th>Nome</th>
-        <th>Nota</th>
-        <th>Likes</th>
     </tr>`;
 	disciplinas.forEach(disc => {
 		$disciplinas.innerHTML +=
         `<tr>
             <td>${disc.id}</td>
             <td>${disc.name}</td>
-            <td>${disc.grade}</td>
-            <td>${disc.likeCount}</td>
         </tr>`;
     });
     $disciplinas.innerHTML += `</table>`;
