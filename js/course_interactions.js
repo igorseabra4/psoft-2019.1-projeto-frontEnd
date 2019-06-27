@@ -47,13 +47,13 @@ function init(){
 init();
 
 async function getCourseProfile(discID) {
-    return await fetch(urlbase + discID, {
+    return (await fetch(urlbase + discID, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
 	})
     .then(result => result.json())
-    .catch(e => console.log(e));
+    .catch(e => console.log(e)));
 }
 
 async function putLike(discID, userID) {
@@ -119,5 +119,15 @@ async function removeComment(discID, userID, commentID) {
             'commentID': commentID
         }
 	})
+    .catch(e => console.log(e));
+}
+
+// ids deve ser uma lista de numeros que correspondem a ids de usuarios
+// a funcao retorna a lista dos nomes de usuarios desses ids
+async function usersWithId(ids) {
+    return await fetch('https://projeto-psoft-igor-victor.herokuapp.com/api/v1/auth/withID/', {
+        body: ids
+    })
+    .then(response => response.json())
     .catch(e => console.log(e));
 }
