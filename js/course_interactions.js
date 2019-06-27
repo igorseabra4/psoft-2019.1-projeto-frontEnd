@@ -84,10 +84,10 @@ async function putGrade(discID, userID, grade) {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
-        body: {
+        body: JSON.stringify({
             'userID': userID,
             'grade': grade
-        }
+        })
 	})
     .catch(e => console.log(e));
 }
@@ -98,12 +98,12 @@ async function putComment(discID, userID, comment, parentCommentID, date) {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
-        body: {
+        body: JSON.stringify({
             'userID': userID,
             'comment': comment,
             'parentCommentID': parentCommentID,
             'date': date
-        }
+        })
 	})
     .catch(e => console.log(e));
 }
@@ -114,10 +114,10 @@ async function removeComment(discID, userID, commentID) {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
-        body: {
+        body: JSON.stringify({
             'userID': userID,
             'commentID': commentID
-        }
+        })
 	})
     .catch(e => console.log(e));
 }
