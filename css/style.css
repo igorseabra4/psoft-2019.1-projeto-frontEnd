@@ -8,13 +8,13 @@ body {
 
   #disciplinas {
         
-       		display: block;
+    display: block;
 	 	width: auto;
 	 	background: #649bef;
 	 	height: auto;
 	 	padding-left: 10px;
 	 	color: #fff;
-	 	font-size: 20px;
+	 	font-size: 15px;
 	 	line-height: 55px;
 	 	text-shadow: 1px 1px 1px rgba(0,0,0,.3);
 	 	box-sizing: border-box;
