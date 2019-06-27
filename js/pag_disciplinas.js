@@ -32,7 +32,7 @@ function preenche_tabela(disciplinas){
         <th>Nome</th>
     </tr>`;
 	disciplinas.forEach(disc => {
-		$disciplinas.innerHTML +=
+		$disciplinas.innerHTML += 
         `<tr>
             <td>${disc.id}</td>
             <td>${disc.name}</td>
