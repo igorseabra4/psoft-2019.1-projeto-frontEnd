@@ -4,6 +4,12 @@ body {
     background: #0ca3d2;
   }
 
+
+
+  #disciplinas {
+    font-size: 40px;
+  }
+
   
   .login {
     position: relative;
