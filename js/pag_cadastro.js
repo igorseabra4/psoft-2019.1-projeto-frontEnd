@@ -12,25 +12,29 @@ function createUser(){
 async function create(user) {
     let url = 'https://projeto-psoft-igor-victor.herokuapp.com/api/v1/auth/';
     
-    await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(user),
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json; charset=utf-8'
-        }
-    })
-    .then(response => {
-        if (response.status == 201){
+    try {
+        let response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        });
+        
+        let data = await response.json();
+        
+        if (response.status == 201) {
             alert("Usuário criado com sucesso.");
             window.location = 'index.html';
         }
         else {
-            let error = await response.json();
-            alert(error.message);
+            alert(data.message);
         }
-    })
-    .catch(e => console.log(e));
+    }
+    catch(e) {
+        console.log(e);
+    }
 }
 
 document.getElementById("createUserButton").addEventListener("click", createUser, false);

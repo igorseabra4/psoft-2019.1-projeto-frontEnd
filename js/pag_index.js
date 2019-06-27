@@ -8,26 +8,32 @@ function login() {
 async function sendLogin(user){
     let url = 'https://projeto-psoft-igor-victor.herokuapp.com/api/v1/auth/login';
     
-    await fetch(url, {
-        method:'POST',
-        body:JSON.stringify(user),
-        headers:{
-            'Access-Control-Allow-Origin':'*',
-            'Content-Type':'application/json;charset=utf-8'
-        }
-    })
-    .then(response => response.json())
-    .then(json => {
+    try {
+        let response = await fetch(url, {
+            method:'POST',
+            body: JSON.stringify(user),
+            headers:{
+                'Access-Control-Allow-Origin':'*',
+                'Content-Type':'application/json;charset=utf-8'
+            }
+        });
+        let json = await response.json();
+
         if (response.status == 200) {
             alert("Login realizado com sucesso.");
-            window.location = 'index.html';
-        } else {
+            localStorage.setItem('token', json.token);
+            localStorage.setItem('userID', json.userID);
+            window.location = 'disciplinas.html';
+        }
+        else {
             localStorage.removeItem('token');
+            localStorage.removeItem('userID');
             alert(json.message);
         }
-    })
-    .catch(e => console.log(e));
+    }
+    catch(e) { 
+        console.log(e);
+    }
 }
 
 document.getElementById("commit").addEventListener("click",login,false);
-    
