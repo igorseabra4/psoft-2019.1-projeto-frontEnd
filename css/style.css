@@ -13,6 +13,11 @@ body {
 	  background: #fff;
 	  margin: 0;
 	  box-sizing: border-box; 
+	  background: #dad8d8;
+	margin: 0;
+		padding: 20px;
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	   	font-weight: 300;
  }
 
   
