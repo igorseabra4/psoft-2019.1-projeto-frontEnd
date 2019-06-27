@@ -1,13 +1,13 @@
+let urlbase = 'https://projeto-psoft-igor-victor.herokuapp.com/api/v1/courses';
+
 async function get_disciplinas() {
-    await fetch('https://projeto-psoft-igor-victor.herokuapp.com/api/v1/courses/')
+    await fetch(urlbase)
     .then(response => response.json())
     .then(data => preenche_tabela(data));
 }
 
 async function get_disciplinas_substring(str) {
-    await fetch('https://projeto-psoft-igor-victor.herokuapp.com/api/v1/courses/substring',{
-        body: str
-    })
+    await fetch(urlbase + '/substring?str=' + str)
     .then(response => response.json())
     .then(data => preenche_tabela(data));
 }
