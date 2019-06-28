@@ -1,4 +1,4 @@
-let urlbase = 'https://projeto-psoft-igor-victor.herokuapp.com/api/v1/courses';
+let urlbase = 'http://projeto-psoft-igor-victor.herokuapp.com/api/v1/courses';
 
 async function get_disciplinas() {
     await fetch(urlbase)
@@ -26,17 +26,22 @@ async function get_disciplinas_ranking() {
 function preenche_tabela(disciplinas){
 	let $disciplinas = document.getElementById("disciplinas");
     $disciplinas.innerHTML =
-    `<table id="disciplinas">
-    <tr>
-        <th>ID</th>
-        <th>Nome</th>
-    </tr>`;
+    `<table id="table">
+    
+    <div class="header-row row">
+        <span class="cell primary">ID</span>
+        <span class="cell">NOME</span> 
+    </div>`;
 	disciplinas.forEach(disc => {
+        console.log("casa");
 		$disciplinas.innerHTML += 
-        `<tr>
-            <td>${disc.id}</td>
-            <td>${disc.name}</td>
-        </tr>`;
+        `
+        <div class="row">
+            <input type="radio" name="expand">
+            <span class="cell primary" data-label="ID">${disc.id}</span>
+            <span class="cell" data-label="NOME">${disc.name}</span>
+        </div>`;
+
     });
     $disciplinas.innerHTML += `</table>`;
 }
