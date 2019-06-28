@@ -6,7 +6,7 @@ css da barra de busca ^^^
 #txtBusca{
 	float:left;
 	border-radius: 5px;
-	background-color: whitesmoke;
+	background-color: rgb(36, 105, 196);
 	padding-left:5px; 
 	font-size:18px;
 	border:none;
