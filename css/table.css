@@ -11,7 +11,7 @@ css da barra de busca ^^^
 	font-size:18px;
 	border:none;
 	height:33px;
-	width:395px;
+	width:350px;
 	margin: 0px 0px 2px 0px;
 	
   }
@@ -19,6 +19,7 @@ css da barra de busca ^^^
   #btnBusca{
 	float:left;
 	cursor:pointer;
+	width: 5px;
   }
    
   #divBusca img{

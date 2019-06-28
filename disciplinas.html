@@ -1,22 +1,27 @@
 <!DOCTYPE html>
-<HTMl>
+<html>
 <head>
 	<meta charset="utf-8">
 	<title>UCDb: classificações e reviews de cursos da UFCG</title>
     <link rel="stylesheet" href="css/table.css">
-	<script type="module" src="js/pag_disciplinas.js"></script> 
+	<script type="text/javascript" src="js/pag_disciplinas.js"></script> 
 	
 </head>
-<header>
-	<div id="divBusca">
-			<input type="text" id="txtBusca" placeholder="Disciplina..."/>
-	</div>
-</header>  
 
 
-<div class="caption">LISTA DE DISCIPLINAS</div>	
-<table id="disciplinas"></table>
+<body>
+		<header>
+				<div id="divBusca">
+					<form action="#" onsubmit="get_disciplinas_substring()">
+						<input type="text" id="txtBusca" placeholder="Disciplina..."/>
+					</form>
+				</div>
+		</header>  
+		
+		
+		<div class="caption">LISTA DE DISCIPLINAS</div>	
+		<table id="disciplinas"></table>
+		
 
 </body>
-</body>
-</HTMl>
+</html>

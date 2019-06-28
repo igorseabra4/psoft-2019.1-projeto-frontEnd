@@ -5,8 +5,9 @@ async function get_disciplinas() {
     .then(response => response.json())
     .then(data => preenche_tabela(data));
 }
-
-async function get_disciplinas_substring(str) {
+// funcao usada para pesquisar as disciplinas digitando seu nome ou parte dele na barra de busca
+async function get_disciplinas_substring() {
+    let str = document.getElementById("txtBusca").value;
     await fetch(urlbase + '/substring?str=' + str)
     .then(response => response.json())
     .then(data => preenche_tabela(data));
@@ -24,7 +25,11 @@ async function get_disciplinas_ranking() {
 }
 
 function preenche_tabela(disciplinas){
-	let $disciplinas = document.getElementById("disciplinas");
+    
+    if (disciplinas) {
+
+    }
+    let $disciplinas = document.getElementById("disciplinas");
     $disciplinas.innerHTML =
     `<table id="table">
     
@@ -33,7 +38,7 @@ function preenche_tabela(disciplinas){
         <span class="cell">NOME</span> 
     </div>`;
 	disciplinas.forEach(disc => {
-        console.log("casa");
+        
 		$disciplinas.innerHTML += 
         `
         <div class="row">
