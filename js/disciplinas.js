@@ -9,21 +9,28 @@ async function get_disciplinas() {
 // funcao usada para pesquisar as disciplinas digitando seu nome ou parte dele na barra de busca
 async function get_disciplinas_substring() {
     let str = document.getElementById("txtBusca").value;
-
     await fetch(urlbase + '/substring?str=' + str)
     .then(response => response.json())
     .then(data => preenche_tabela(data));
 }
 
-// essa funcao provavelmente vai sair daqui, ja que a lista que ela retorna eh diferente e precisa de auth
 async function get_disciplinas_ranking() {
-    await fetch(urlbase + '/rank', {
+    let response = await fetch(urlbase + '/rank', {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
     })
-    .then(response => response.json())
-    .then(data => preenche_tabela(data));
+
+    if (response.status != 200){
+        alert("Houve um erro ao fazer a requisição. Por favor, faça login e tente novamente.");
+            localStorage.removeItem('token');
+            localStorage.removeItem('userID');
+            window.location = 'index.html';
+    }
+    else {
+        let json = await response.json();
+        preenche_tabela(json);
+    }
 }
 
 function preenche_tabela(disciplinas){
@@ -32,23 +39,16 @@ function preenche_tabela(disciplinas){
     `<table id="table">
     <div class="header-row row">
         <span class="cell primary">ID</span>
-        <span class="cell">NOME</span> 
+        <span class="cell cell-name">Nome</span> 
     </div>`;
 	disciplinas.forEach(disc => {
 		$disciplinas.innerHTML += 
         `<div class="row">
-            <span class="cell primary" data-label="ID">${disc.id}</span>
-            <span class="cell" data-label="NOME"><a href="perfil.html?discID=${disc.id}">${disc.name}</a></span>
+            <span class="cell" data-label="ID">${disc.id}</span>
+            <span class="cell cell-name" data-label="NOME"><a href="perfil.html?discID=${disc.id}">${disc.name}</a></span>
         </div>`;
     });
     $disciplinas.innerHTML += `</table>`;
-}
-
-function init_substring(substring) {
-    if (substring == '')
-        get_disciplinas();
-    else
-	    get_disciplinas_substring(substring);
 }
 
 get_disciplinas();

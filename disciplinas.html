@@ -3,21 +3,26 @@
 <head>
 	<meta charset="utf-8">
 	<title>UCDb: classificações e reviews de cursos da UFCG</title>
-	<link rel="stylesheet" href="css/table.css">
-	<script type="text/javascript" src="js/pag_disciplinas.js"></script> 
-	
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/disciplinas.css">
+	<script type="text/javascript" src="js/disciplinas.js"></script>
 </head>
 
 <body>
-		<header>
-			<div id="divBusca">
-				<form action="#" onsubmit="get_disciplinas_substring()">
-					<input type="text" id="txtBusca" placeholder="Disciplina..."/>
-				</form>
-			</div>
-		</header>
+    <img class="computacao-logo" src="img/logo-topo2.png" alt="No image">
+    
+    <div class="form-comum" id="divBusca">
+        <form action="javascript:void(0);" onsubmit="get_disciplinas_substring()">
+            <h1>Pesquisa de Disciplinas</h1>
+		    <input type="text" id="txtBusca" placeholder="Pesquisar disciplina..."/>
+            <p class="submit"><input type="submit" id="commit" value="Pesquisar"></p>
+        </form>
+    </div>
 		
-		<div class="caption">LISTA DE DISCIPLINAS</div>	
-		<table id="disciplinas"></table>
-</body>
+    <a class="botao-comum" id="botao-ranking" onclick="get_disciplinas_ranking()">Ranking</a>
+    <div class="form-comum">
+        <h1>Lista de Disciplinas</h1>	
+        <table id="disciplinas"></table>
+    </div>
+    </body>
 </html>

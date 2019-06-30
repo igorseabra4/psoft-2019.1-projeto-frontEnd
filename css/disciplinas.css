@@ -1,0 +1,33 @@
+.form-comum {
+    width: 600px;
+}
+
+input[type=text] {
+    width: 95%;
+}
+
+.header-row {
+    border-radius: 10px;
+	color: black;
+    width: auto;
+}
+
+.row {
+    display: table-row;
+    width: auto;
+}
+
+.cell {
+    display: table-cell;
+    padding: 6px; 
+    border-bottom: 1px solid #e5e5e5;
+    text-align: center;
+}
+
+.cell-name {
+    width: 100%;
+    display: table-cell;
+    padding: 6px; 
+    border-bottom: 1px solid #e5e5e5;
+    text-align: center;
+}

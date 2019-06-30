@@ -49,31 +49,29 @@ async function like_click() {
     let userID = parseInt(localStorage.getItem('userID'));
     let profile = await getCourseProfile(discID);
 
-    let likeCount = profile.likeCount;
     if (profile.likedUserIDs.includes(userID)) {
-        console.log('killlike');
-        removeLike(discID, userID);
+        await removeLike(discID, userID);
         set_button_notliked();
-        likeCount--;
+        profile.likeCount--;
     }
     else {
-        console.log('putlike');
-        putLike(discID, userID);
+        await putLike(discID, userID);
         set_button_liked();
-        likeCount++;
+        profile.likeCount++;
     }
 
-    document.getElementById("likecounter").innerHTML = `<h1 id="likecounter">Likes: ${likeCount}</h1>`;
+    document.getElementById('likes-disciplina').innerHTML =
+    `<p id="likes-disciplina">Curtidas: ${profile.likeCount}</p>`;
 }
 
-document.getElementById("meulike").addEventListener("click", like_click, false);
+document.getElementById("meu-like").addEventListener("click", like_click, false);
 
 function set_button_liked() {
-    document.getElementById("meulike").innerHTML = `<button id="meulike">Unlike</button>`
+    document.getElementById("meu-like").innerHTML = `<a id="meu-like">Remover minha curtida</a>`
 }
 
 function set_button_notliked() {
-    document.getElementById("meulike").innerHTML = `<button id="meulike">Like</button>`
+    document.getElementById("meu-like").innerHTML = `<a id="meu-like">Curtir</a>`
 }
 
 async function putLike(discID, userID) {
@@ -94,7 +92,6 @@ async function putLike(discID, userID) {
     .then(resp => {
         if (!resp.success)
             darErro();
-            //alert(resp.json.message);
     })
     .catch(e => console.log(e));
 }
@@ -117,13 +114,35 @@ async function removeLike(discID, userID) {
     .then(resp => {
         if (!resp.success)
             darErro();
-            //alert(resp.json.message);
     })
     .catch(e => console.log(e));
 }
 
-
 // grade functions
+
+async function sendgrade_click() {
+    let discID = getVariable('discID');
+    let userID = parseInt(localStorage.getItem('userID'));
+    let gradeBox = document.getElementById('minha-nota');
+
+    let grade = gradeBox.value;
+
+    if (grade === undefined ||
+        grade > 10 || grade < 0)
+        alert("Insira uma nota válida entre 0 e 10!");
+    else{
+        gradeBox.value = grade;
+        
+        await putGrade(discID, userID, grade);
+    
+        let profile = await getCourseProfile(discID);
+    
+        document.getElementById('nota-disciplina').innerHTML =
+        `<p id="nota-disciplina">Nota: ${profile.grade}</p>`;
+    }
+}
+
+document.getElementById("enviar-nota").addEventListener("click", sendgrade_click, false);
 
 async function putGrade(discID, userID, grade) {
     await fetch(urlbase + discID + '/grade', {
@@ -146,7 +165,6 @@ async function putGrade(discID, userID, grade) {
     .then(resp => {
         if (!resp.success)
             darErro();
-            //alert(resp.json.message);
     })
     .catch(e => console.log(e));
 }
@@ -154,7 +172,6 @@ async function putGrade(discID, userID, grade) {
 // comment functions
 
 async function putComment(discID, userID, comment, parentCommentID, date) {
-    let data;
     await fetch(urlbase + discID + '/comment', {
 		method: 'PUT',
         headers: {
@@ -167,14 +184,19 @@ async function putComment(discID, userID, comment, parentCommentID, date) {
             'date': date
         })
 	})
-    .then(result => data = treatResult(result))
+    .then(response => {
+        if (response.status != 200) 
+            return {success: false, json: response.json()};
+        return {success: true};
+    })
+    .then(resp => {
+        if (!resp.success)
+            darErro();
+    })
     .catch(e => console.log(e));
-    
-    return data;
 }
 
 async function removeComment(discID, userID, commentID) {
-    let data;
     await fetch(urlbase + discID + '/like', {
 		method: 'DELETE',
         headers: {
@@ -187,8 +209,6 @@ async function removeComment(discID, userID, commentID) {
 	})
     .then(result => data = treatResult(result))
     .catch(e => console.log(e));
-    
-    return data;
 }
 
 async function usersWithId(ids) {
@@ -209,28 +229,33 @@ async function usersWithId(ids) {
 async function init(){
     try {
         let discID = getVariable('discID');
+        let userID = parseInt(localStorage.getItem('userID'));
 
         localStorage.setItem('currentCourseID', discID);
     
         let profile = await getCourseProfile(discID);
         
-        let $perfil = document.getElementById("disciplina-card");
-
         if (profile.likedUserIDs.includes(parseInt(localStorage.getItem('userID'))))
             set_button_liked();
         else
             set_button_notliked();
 
+        document.getElementById('nome-disciplina').innerHTML =
+            `<h1 id="nome-disciplina">${profile.name}</h1>`;
+        document.getElementById('id-disciplina').innerHTML =
+            `<p id="id-disciplina">ID: ${profile.id}</p>`;
+        document.getElementById('likes-disciplina').innerHTML =
+            `<p id="likes-disciplina">Curtidas: ${profile.likeCount}</p>`;
+        document.getElementById('nota-disciplina').innerHTML =
+            `<p id="likes-disciplina">Nota: ${profile.grade}</p>`;
         
-        $perfil.innerHTML += `<header id=header-card>${profile.name}</header>`;
-        $perfil.innerHTML += `<h1>ID : ${profile.id}</h1>`;
-        $perfil.innerHTML += `<h1 id="likecounter">Likes: ${profile.likeCount}</h1>`;
-        $perfil.innerHTML += `<h1>Nota: ${profile.grade}</h1>`;
+        if (profile.grades[userID] !== undefined)
+            document.getElementById('minha-nota').value = profile.grades[userID];
+        else
+            document.getElementById('minha-nota').value = 0;
         
-        
-
         let $comments = document.getElementById("comentarios");
-
+        
         $comments.innerHTML = `<div id="comentarios">`;
         profile.comments.forEach(element => {
             $comments.innerHTML += `<h1>Comentário</h1>`;

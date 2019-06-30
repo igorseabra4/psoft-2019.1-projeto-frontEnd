@@ -21,7 +21,6 @@ async function sendLogin(user){
         let json = await response.json();
 
         if (response.status == 200) {
-            alert("Login realizado com sucesso.");
             localStorage.setItem('token', json.token);
             localStorage.setItem('userID', json.userID);
             window.location = 'disciplinas.html';
