@@ -214,19 +214,20 @@ async function init(){
     
         let profile = await getCourseProfile(discID);
         
-        let $perfil = document.getElementById("disciplina");
+        let $perfil = document.getElementById("disciplina-card");
 
         if (profile.likedUserIDs.includes(parseInt(localStorage.getItem('userID'))))
             set_button_liked();
         else
             set_button_notliked();
 
-        $perfil.innerHTML = `<div id="disciplina">`;
-        $perfil.innerHTML += `<h1>ID: ${profile.id}</h1>`;
-        $perfil.innerHTML += `<h1>Nome: ${profile.name}</h1>`;
-        $perfil.innerHTML += `<h1 id="likecounter">Número de likes: ${profile.likeCount}</h1>`;
+        
+        $perfil.innerHTML += `<header id=header-card>${profile.name}</header>`;
+        $perfil.innerHTML += `<h1>ID : #${profile.id}</h1>`;
+        $perfil.innerHTML += `<h1 id="likecounter">Likes: ${profile.likeCount}</h1>`;
         $perfil.innerHTML += `<h1>Nota: ${profile.grade}</h1>`;
-        $perfil.innerHTML += `</div>`;
+        $perfil.innerHTML += `<button id="meulike"></button>` 
+        
 
         let $comments = document.getElementById("comentarios");
 
