@@ -63,17 +63,17 @@ async function like_click() {
         likeCount++;
     }
 
-    document.getElementById("likecounter").innerHTML = `<h1 id="likecounter">Número de likes: ${likeCount}</h1>`;
+    document.getElementById("likecounter").innerHTML = `<h1 id="likecounter">Likes: ${likeCount}</h1>`;
 }
 
 document.getElementById("meulike").addEventListener("click", like_click, false);
 
 function set_button_liked() {
-    document.getElementById("meulike").innerHTML = `<button id="meulike">Clique para remover like</button>`
+    document.getElementById("meulike").innerHTML = `<button id="meulike">Unlike</button>`
 }
 
 function set_button_notliked() {
-    document.getElementById("meulike").innerHTML = `<button id="meulike">Clique para dar like</button>`
+    document.getElementById("meulike").innerHTML = `<button id="meulike">Like</button>`
 }
 
 async function putLike(discID, userID) {
@@ -223,10 +223,10 @@ async function init(){
 
         
         $perfil.innerHTML += `<header id=header-card>${profile.name}</header>`;
-        $perfil.innerHTML += `<h1>ID : #${profile.id}</h1>`;
+        $perfil.innerHTML += `<h1>ID : ${profile.id}</h1>`;
         $perfil.innerHTML += `<h1 id="likecounter">Likes: ${profile.likeCount}</h1>`;
         $perfil.innerHTML += `<h1>Nota: ${profile.grade}</h1>`;
-        $perfil.innerHTML += `<button id="meulike"></button>` 
+        
         
 
         let $comments = document.getElementById("comentarios");

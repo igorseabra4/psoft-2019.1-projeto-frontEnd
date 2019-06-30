@@ -31,11 +31,15 @@ body {
     font-size: 200%;
     margin-bottom: 50px;
     font-weight: bold;
+    height: auto;
   }
 
+  #likecounter{
+    font-size: 200%;
+  }
 
   
-  #disciplina-card{
+  #disciplina-card {
 
     position: relative;
     margin: 30px auto;
@@ -72,6 +76,7 @@ body {
     border-radius: 10px;
     
   }
+  
   
   .login:before {
     content: '';
@@ -237,10 +242,12 @@ body {
 
   #meulike {
     
+    display: inline-block;
     position: relative;
     margin: 30px auto;
     padding: 20px 20px 20px;
     width: 100px;
+    margin-bottom: 100px;
     
     padding: 0 18px;
     height: 29px;
@@ -265,10 +272,13 @@ body {
     font-family: 'Lucida Grande', Tahoma, Verdana, sans-serif;
     font-size: 14px;
     cursor: pointer;
-    display: block;
     border-radius: 20px;
     text-align: center;
 
+  }
+
+  #meulike:hover{
+    border-color: blue;
   }
   
 
