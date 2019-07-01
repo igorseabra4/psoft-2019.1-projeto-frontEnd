@@ -186,6 +186,8 @@ async function sendcomment_click() {
     currentParent = -1;
     document.getElementById("em-resposta-a").innerHTML = `<h5 id="em-resposta-a"></h5>`
 
+    document.getElementById('comment-area').value = "";
+
     init_comments(userID);
 }
 
