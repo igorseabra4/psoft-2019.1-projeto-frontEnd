@@ -321,7 +321,7 @@ async function init_comments(userID) {
             qtd++;
         }
     });
-    $comments.innerHTML += `</div>`;c1
+    $comments.innerHTML += `</div>`;
 
 	comments.forEach(comm => {
         if (!comm.deleted && (comm.userID == userID || userID == 15)) {
