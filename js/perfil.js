@@ -361,6 +361,7 @@ async function init_comments(userID) {
             if (comm.parentCommentID == -1){
                 let botaoResponder = document.getElementById(`botao-responder-${comm.id}`);
                 
+                if (botaoResponder !== null)
                 botaoResponder.addEventListener("click", function(){
                     respondercomment_click(comm.id, `${comm.userName} - ${comm.dateString}`);
                 }, false);
@@ -369,6 +370,7 @@ async function init_comments(userID) {
             if (comm.userID == userID || userID == 15) {
                 let botaoDeletar = document.getElementById(`botao-deletar-${comm.id}`);
 
+                if (botaoDeletar !== null)
                 botaoDeletar.addEventListener("click", function(){
                     deletecomment_click(comm.id);
                 }, false);
