@@ -327,7 +327,7 @@ async function init_comments(userID) {
             $comments.innerHTML += `<a class="botao-comum botao-comment" id="botao-responder-${comm.id}"">Adicionar resposta</a>`;
 
             if (comm.userID == userID || userID == 15)
-                $comments.innerHTML += `<a class="botao-comum botao-comment" style="margin-right: 64px"id="botao-deletar-${comm.id}"">Apagar comentário</a>`;
+                $comments.innerHTML += `<a class="botao-comum botao-comment" style="margin-left: 64px"id="botao-deletar-${comm.id}"">Apagar comentário</a>`;
 
             $comments.innerHTML += `<hr>`;
 
