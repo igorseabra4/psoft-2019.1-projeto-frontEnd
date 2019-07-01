@@ -216,7 +216,7 @@ async function putComment(discID, userID, userName, comment, parentCommentID) {
 }
 
 async function removeComment(discID, userID, commentID) {
-    await fetch(urlbase + discID + '/like', {
+    await fetch(urlbase + discID + '/comment', {
 		method: 'DELETE',
         body: JSON.stringify({
             'userID': userID,
@@ -308,7 +308,7 @@ async function init_comments(userID) {
                 <p>${comm.comment}</p>`;
             
             if (comm.userID == userID)
-                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar">Deletar comentário</a>`;
+                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar" onclick="alert('oi arthur')">Deletar comentário</a>`;
 
             $comments.innerHTML += `</div>`;
             $comments.innerHTML += `<hr>`;
