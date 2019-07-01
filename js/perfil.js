@@ -314,7 +314,7 @@ async function init_comments(userID) {
                 <p>${comm.comment}</p>`;
             
             if (comm.userID == userID || userID == 15)
-                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar-${comm.id}"">Deletar comentário</a>`;
+                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar-${comm.id}"">Apagar comentário</a>`;
 
             $comments.innerHTML += `</div>`;
             $comments.innerHTML += `<hr>`;
