@@ -191,7 +191,7 @@ async function sendcomment_click() {
         zero_comments();
 }
 
-document.getElementById("enviar-comentario").addEventListener("click", putComment_click, false);
+document.getElementById("enviar-comentario").addEventListener("click", sendcomment_click, false);
 
 
 // 
