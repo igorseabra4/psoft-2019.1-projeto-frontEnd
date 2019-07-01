@@ -186,8 +186,6 @@ async function sendcomment_click() {
     currentParent = -1;
     document.getElementById("em-resposta-a").innerHTML = `<h5 id="em-resposta-a"></h5>`
 
-    document.getElementById('comment-area').value = "";
-
     init_comments(userID);
 }
 
@@ -322,7 +320,7 @@ async function init_comments(userID) {
 	comments.forEach(comm => {
         if (!comm.deleted && comm.parentCommentID == -1) {
             $comments.innerHTML += 
-            `<div class="container-comentario"><div class="row">
+            `<div class="row">
                 <h4>${comm.userName} - ${comm.dateString}</h4>
                 <p>${comm.comment}</p>`;
             
@@ -350,12 +348,11 @@ async function init_comments(userID) {
                 }
             });
             
-            $comments.innerHTML += `<hr>`;
             $comments.innerHTML += `</div>`;
             qtd++;
         }
     });
-    $comments.innerHTML += `</div></div>`;
+    $comments.innerHTML += `</div>`;
 
 	comments.forEach(comm => {
         if (!comm.deleted)
