@@ -185,33 +185,10 @@ async function sendcomment_click() {
     
     let profile = await getCourseProfile(discID);
     
-    if (profile.commentsIDs.length > 0)
-        init_comments(userID);
-    else
-        zero_comments();
-}
-
-document.getElementById("enviar-comentario").addEventListener("click", deletecomment_click, false);
-
-async function deletecomment_click() {
-
-    let discID = getVariable('discID');
-    let userID = localStorage.getItem('userID');
-    let commentID = document.getElementById('comment-area');
-    let userName = await userNameFromID(userID);
-    
-    await putComment(discID, userID, userName, comment, -1);
-    
-    let profile = await getCourseProfile(discID);
-    
-    if (profile.commentsIDs.length > 0)
-        init_comments(userID);
-    else
-        zero_comments();
+    init_comments(userID);
 }
 
 document.getElementById("enviar-comentario").addEventListener("click", sendcomment_click, false);
-
 
 async function putComment(discID, userID, userName, comment, parentCommentID) {
     await fetch(urlbase + discID + '/comment', {
@@ -233,6 +210,20 @@ async function putComment(discID, userID, userName, comment, parentCommentID) {
             darErro();
     })
     .catch(e => console.log(e));
+}
+
+async function deletecomment_click(id) {
+    let discID = getVariable('discID');
+    let userID = localStorage.getItem('userID');
+    
+    await removeComment(discID, userID, id);
+    
+    let profile = await getCourseProfile(discID);
+    
+    if (profile.commentsIDs.length > 0)
+        init_comments(userID);
+    else
+        zero_comments();
 }
 
 async function removeComment(discID, userID, commentID) {
@@ -283,10 +274,7 @@ async function init(){
         else
             document.getElementById('minha-nota').value = 0;
         
-        if (profile.commentsIDs.length > 0)
-            init_comments(userID);
-        else
-            zero_comments();
+        init_comments(userID);
         
         // o profile retornado acima é um objeto com os atributos:
         // id (discID)
@@ -315,7 +303,7 @@ async function init_comments(userID) {
     // deleted (comentário foi deletado)
     
     let comments = await getCourseComments(getVariable('discID'));
-    console.log(comments);
+    let qtd = 0;
 
     let $comments = document.getElementById("comentarios");
     $comments.innerHTML =
@@ -327,19 +315,30 @@ async function init_comments(userID) {
                 <h4>${comm.userName} - ${comm.dateString}</h4>
                 <p>${comm.comment}</p>`;
             
-            if (comm.userID == userID)
-                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar" onclick="alert(${comm.id})">Deletar comentário</a>`;
+            if (comm.userID == userID || userID == 15)
+                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar-${comm.id}"">Deletar comentário</a>`;
 
             $comments.innerHTML += `</div>`;
             $comments.innerHTML += `<hr>`;
+            qtd++;
         }
     });
     $comments.innerHTML += `</div>`;
-}
 
-function zero_comments() {
-    let $comments = document.getElementById("comentarios");
-    $comments.innerHTML =`<div id="comentarios"><h4>Nenhum comentário para esta disciplina</h4></div>`;
+	comments.forEach(comm => {
+        if (!comm.deleted && (comm.userID == userID || userID == 15)) {
+            let element = document.getElementById(`botao-deletar-${comm.id}`);
+
+            let id = parseInt(element.id.split("-")[2]);
+
+            element.addEventListener("click", function(){
+                deletecomment_click(id);
+              }, false);
+        }
+    });
+    
+    if (qtd == 0)
+        $comments.innerHTML =`<div id="comentarios"><h4>Nenhum comentário para esta disciplina</h4></div>`;
 }
 
 async function userNameFromID(id) {
