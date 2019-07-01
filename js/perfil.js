@@ -328,7 +328,7 @@ async function init_comments(userID) {
                 <p>${comm.comment}</p>`;
             
             if (comm.userID == userID)
-                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar-${comm.id}" onclick="deletecomment_click(${comm.id})">Deletar comentário</a>`;
+                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar-${comm.id}">Deletar comentário</a>`;
                 document.getElementById(`botao-deletar-${comm.id}`).addEventListener("click", deletecomment_click(comm.id), false);
             $comments.innerHTML += `</div>`;
             $comments.innerHTML += `<hr>`;
