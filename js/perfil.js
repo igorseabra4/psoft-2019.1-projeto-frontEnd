@@ -187,6 +187,8 @@ async function sendcomment_click() {
     
     if (profile.commentsIDs.length > 0)
         init_comments(userID);
+    else
+        zero_comments();
 }
 
 document.getElementById("enviar-comentario").addEventListener("click", sendcomment_click, false);
@@ -263,6 +265,8 @@ async function init(){
         
         if (profile.commentsIDs.length > 0)
             init_comments(userID);
+        else
+            zero_comments();
         
         // o profile retornado acima é um objeto com os atributos:
         // id (discID)
@@ -311,6 +315,11 @@ async function init_comments(userID) {
         }
     });
     $comments.innerHTML += `</div>`;
+}
+
+function zero_comments() {
+    let $comments = document.getElementById("comentarios");
+    $comments.innerHTML =`<div id="comentarios"><h4>Nenhum comentário para esta disciplina</h4></div>`;
 }
 
 async function userNameFromID(id) {
