@@ -193,14 +193,16 @@ async function sendcomment_click() {
 
 document.getElementById("enviar-comentario").addEventListener("click", deletecomment_click, false);
 
-async function deletecomment_click() {
+
+// 
+
+async function deletecomment_click(commentID) {
 
     let discID = getVariable('discID');
     let userID = localStorage.getItem('userID');
-    let commentID = document.getElementById('comment-area');
-    let userName = await userNameFromID(userID);
     
-    await putComment(discID, userID, userName, comment, -1);
+    
+    await removeComment(discID, userID, commentID);
     
     let profile = await getCourseProfile(discID);
     
@@ -328,7 +330,7 @@ async function init_comments(userID) {
                 <p>${comm.comment}</p>`;
             
             if (comm.userID == userID)
-                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar" onclick="alert(${comm.id})">Deletar comentário</a>`;
+                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar" onclick="deletecomment_click(${comm.id})">Deletar comentário</a>`;
 
             $comments.innerHTML += `</div>`;
             $comments.innerHTML += `<hr>`;
