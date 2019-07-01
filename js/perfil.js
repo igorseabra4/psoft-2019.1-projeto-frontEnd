@@ -322,7 +322,7 @@ async function init_comments(userID) {
 	comments.forEach(comm => {
         if (!comm.deleted && comm.parentCommentID == -1) {
             $comments.innerHTML += 
-            `<div class="row">
+            `<div class="row container-comentario">
                 <h4>${comm.userName} - ${comm.dateString}</h4>
                 <p>${comm.comment}</p>`;
             

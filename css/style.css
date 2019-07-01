@@ -120,3 +120,7 @@ body {
     text-shadow: 0 1px #2a85a1;
     font-size: 14px;
 }
+
+.container-comentario {
+    border-bottom: solid 5px black;
+}
