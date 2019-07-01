@@ -181,8 +181,11 @@ async function sendcomment_click() {
     let comment = document.getElementById('comment-area').value;
     let userName = await userNameFromID(userID);
     
-    await putComment(discID, userID, userName, comment, -1);
+    await putComment(discID, userID, userName, comment, currentParent);
         
+    currentParent = -1;
+    document.getElementById("em-resposta-a").innerHTML = `<h5 id="em-resposta-a"></h5>`
+
     init_comments(userID);
 }
 
@@ -242,6 +245,14 @@ async function removeComment(discID, userID, commentID) {
             darErro();
     })
     .catch(e => console.log(e));
+}
+
+let currentParent = -1;
+
+async function respondercomment_click(id, title){
+    currentParent = id;
+    document.getElementById("em-resposta-a").innerHTML = `<h5 id="em-resposta-a">Em resposta a: ${title}</h5>`
+    document.getElementById("em-resposta-a").scrollIntoView();
 }
 
 // main functions
@@ -307,31 +318,63 @@ async function init_comments(userID) {
     $comments.innerHTML =
     `<div id="comentarios">`;
 	comments.forEach(comm => {
-        if (!comm.deleted) {
+        if (!comm.deleted && comm.parentCommentID == -1) {
             $comments.innerHTML += 
             `<div class="row">
                 <h4>${comm.userName} - ${comm.dateString}</h4>
                 <p>${comm.comment}</p>`;
             
-            if (comm.userID == userID || userID == 15)
-                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar-${comm.id}"">Apagar comentário</a>`;
+            $comments.innerHTML += `<a class="botao-comum botao-comment" id="botao-responder-${comm.id}"">Adicionar resposta</a>`;
 
-            $comments.innerHTML += `</div>`;
+            if (comm.userID == userID || userID == 15)
+                $comments.innerHTML += `<a class="botao-comum botao-comment" style="margin-left: 64px"id="botao-deletar-${comm.id}"">Apagar comentário</a>`;
+
             $comments.innerHTML += `<hr>`;
+
+            comments.forEach(comm2 => {
+                if (!comm2.deleted && comm2.parentCommentID == comm.id) {
+                    $comments.innerHTML += 
+                    `<div class="row" style="margin-left: 50px;">
+                    <h4>${comm2.userName} - ${comm2.dateString}</h4>
+                    <h5>Em resposta a ${comm.userName} - ${comm.dateString}</h5>
+                    <p>${comm2.comment}</p>`;
+                    
+                    if (comm2.userID == userID || userID == 15)
+                        $comments.innerHTML += `<a class="botao-comum botao-comment" style="margin-left: 64px"id="botao-deletar-${comm2.id}"">Apagar comentário</a>`;
+            
+                    $comments.innerHTML += `</div>`;
+                    $comments.innerHTML += `<hr>`;
+                    qtd++;
+                }
+            });
+            
+            $comments.innerHTML += `<hr>`;
+            $comments.innerHTML += `</div>`;
             qtd++;
         }
     });
     $comments.innerHTML += `</div>`;
 
 	comments.forEach(comm => {
-        if (!comm.deleted && (comm.userID == userID || userID == 15)) {
-            let element = document.getElementById(`botao-deletar-${comm.id}`);
+        if (!comm.deleted)
+        {
+            if (comm.parentCommentID == -1){
+                let botaoResponder = document.getElementById(`botao-responder-${comm.id}`);
+                
+                if (botaoResponder !== null)
+                botaoResponder.addEventListener("click", function(){
+                    respondercomment_click(comm.id, `${comm.userName} - ${comm.dateString}`);
+                }, false);
+            }
 
-            let id = parseInt(element.id.split("-")[2]);
+            if (comm.userID == userID || userID == 15) {
+                let botaoDeletar = document.getElementById(`botao-deletar-${comm.id}`);
 
-            element.addEventListener("click", function(){
-                deletecomment_click(id);
-              }, false);
+                if (botaoDeletar !== null)
+                botaoDeletar.addEventListener("click", function(){
+                    deletecomment_click(comm.id);
+                }, false);
+            }
         }
     });
     
