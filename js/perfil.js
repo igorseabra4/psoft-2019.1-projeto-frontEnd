@@ -213,8 +213,6 @@ async function deletecomment_click(commentID) {
 }
 
 
-
-
 async function putComment(discID, userID, userName, comment, parentCommentID) {
     await fetch(urlbase + discID + '/comment', {
         method:'PUT',
@@ -257,7 +255,7 @@ async function removeComment(discID, userID, commentID) {
     .catch(e => console.log(e));
 }
 
-// main functions + master
+// main functions
 
 async function init(){
     try {
@@ -330,13 +328,14 @@ async function init_comments(userID) {
                 <p>${comm.comment}</p>`;
             
             if (comm.userID == userID)
-                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar" onclick="deletecomment_click(${comm.id})">Deletar comentário</a>`;
-
+                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar-${comm.id}" onclick="deletecomment_click(${comm.id})">Deletar comentário</a>`;
+                document.getElementById(`botao-deletar-${comm.id}`).addEventListener("click", deletecomment_click(comm.id), false);
             $comments.innerHTML += `</div>`;
             $comments.innerHTML += `<hr>`;
         }
     });
     $comments.innerHTML += `</div>`;
+    
 }
 
 function zero_comments() {
