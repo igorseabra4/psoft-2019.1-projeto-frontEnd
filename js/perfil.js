@@ -257,7 +257,7 @@ async function removeComment(discID, userID, commentID) {
     .catch(e => console.log(e));
 }
 
-// main functions
+// main functions + master
 
 async function init(){
     try {
