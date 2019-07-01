@@ -182,9 +182,7 @@ async function sendcomment_click() {
     let userName = await userNameFromID(userID);
     
     await putComment(discID, userID, userName, comment, -1);
-    
-    let profile = await getCourseProfile(discID);
-    
+        
     init_comments(userID);
 }
 
@@ -323,7 +321,7 @@ async function init_comments(userID) {
             qtd++;
         }
     });
-    $comments.innerHTML += `</div>`;
+    $comments.innerHTML += `</div>`;c1
 
 	comments.forEach(comm => {
         if (!comm.deleted && (comm.userID == userID || userID == 15)) {
