@@ -322,7 +322,7 @@ async function init_comments(userID) {
 	comments.forEach(comm => {
         if (!comm.deleted && comm.parentCommentID == -1) {
             $comments.innerHTML += 
-            `<div class="row container-comentario">
+            `<div class="container-comentario"><div class="row">
                 <h4>${comm.userName} - ${comm.dateString}</h4>
                 <p>${comm.comment}</p>`;
             
@@ -355,7 +355,7 @@ async function init_comments(userID) {
             qtd++;
         }
     });
-    $comments.innerHTML += `</div>`;
+    $comments.innerHTML += `</div></div>`;
 
 	comments.forEach(comm => {
         if (!comm.deleted)
