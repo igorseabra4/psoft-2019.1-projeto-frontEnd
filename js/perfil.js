@@ -1,4 +1,5 @@
 let urlbase = 'https://projeto-psoft-igor-victor.herokuapp.com/api/v1/courses/profile/';
+//let urlbase = 'https://localhost:8080/api/v1/courses/profile/';
 
 function getVariable(variable)
 {
@@ -34,9 +35,27 @@ async function getCourseProfile(discID) {
     if (response.status == 200)
         data = json;
     else
+        darErro();
+    
+    return data;
+}
+
+async function getCourseComments(discID) {
+    let data;
+
+    let response = await fetch(urlbase + discID + '/comments', {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+    });
+    
+    let json = await response.json();
+    
+    if (response.status == 200)
+        data = json;
+    else
     {
         darErro();
-        data = undefined;
     }
     
     return data;
@@ -86,11 +105,6 @@ async function putLike(discID, userID) {
     })
     .then(response => {
         if (response.status != 200) 
-            return {success: false, json: response.json()};
-        return {success: true};
-    })
-    .then(resp => {
-        if (!resp.success)
             darErro();
     })
     .catch(e => console.log(e));
@@ -107,12 +121,7 @@ async function removeLike(discID, userID) {
         }
     })
     .then(response => {
-        if (response.status != 200) 
-            return {success: false, json: response.json()};
-        return {success: true};
-    })
-    .then(resp => {
-        if (!resp.success)
+        if (response.status != 200)
             darErro();
     })
     .catch(e => console.log(e));
@@ -158,12 +167,7 @@ async function putGrade(discID, userID, grade) {
         }
     })
     .then(response => {
-        if (response.status != 200) 
-            return {success: false, json: response.json()};
-        return {success: true};
-    })
-    .then(resp => {
-        if (!resp.success)
+        if (response.status != 200)
             darErro();
     })
     .catch(e => console.log(e));
@@ -171,26 +175,39 @@ async function putGrade(discID, userID, grade) {
 
 // comment functions
 
-async function putComment(discID, userID, comment, parentCommentID, date) {
+async function sendcomment_click() {
+    let discID = getVariable('discID');
+    let userID = localStorage.getItem('userID');
+    let comment = document.getElementById('comment-area').value;
+    let userName = await userNameFromID(userID);
+    
+    await putComment(discID, userID, userName, comment, -1);
+    
+    let profile = await getCourseProfile(discID);
+    
+    if (profile.commentsIDs.length > 0)
+        init_comments(userID);
+}
+
+document.getElementById("enviar-comentario").addEventListener("click", sendcomment_click, false);
+
+async function putComment(discID, userID, userName, comment, parentCommentID) {
     await fetch(urlbase + discID + '/comment', {
-		method: 'PUT',
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-        },
+        method:'PUT',
         body: JSON.stringify({
             'userID': userID,
+            'userName': userName,
             'comment': comment,
-            'parentCommentID': parentCommentID,
-            'date': date
-        })
+            'parentCommentID': parentCommentID
+        }),
+        headers:{
+            'Access-Control-Allow-Origin':'*',
+            'Content-Type':'application/json;charset=utf-8',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
 	})
     .then(response => {
-        if (response.status != 200) 
-            return {success: false, json: response.json()};
-        return {success: true};
-    })
-    .then(resp => {
-        if (!resp.success)
+        if (response.status != 200)
             darErro();
     })
     .catch(e => console.log(e));
@@ -199,30 +216,22 @@ async function putComment(discID, userID, comment, parentCommentID, date) {
 async function removeComment(discID, userID, commentID) {
     await fetch(urlbase + discID + '/like', {
 		method: 'DELETE',
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-        },
         body: JSON.stringify({
             'userID': userID,
             'commentID': commentID
-        })
+        }),
+        headers:{
+            'Access-Control-Allow-Origin':'*',
+            'Content-Type':'application/json;charset=utf-8',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
 	})
-    .then(result => data = treatResult(result))
-    .catch(e => console.log(e));
-}
-
-async function usersWithId(ids) {
-    let data;
-    await fetch('https://projeto-psoft-igor-victor.herokuapp.com/api/v1/auth/withID/', {
-        body: JSON.stringify(ids)
+    .then(response => {
+        if (response.status != 200)
+            darErro();
     })
-    .then(response => response.json())
-    .then(result => data = treatResult(result))
     .catch(e => console.log(e));
-    
-    return data;
 }
-
 
 // main functions
 
@@ -231,8 +240,6 @@ async function init(){
         let discID = getVariable('discID');
         let userID = parseInt(localStorage.getItem('userID'));
 
-        localStorage.setItem('currentCourseID', discID);
-    
         let profile = await getCourseProfile(discID);
         
         if (profile.likedUserIDs.includes(parseInt(localStorage.getItem('userID'))))
@@ -254,13 +261,8 @@ async function init(){
         else
             document.getElementById('minha-nota').value = 0;
         
-        let $comments = document.getElementById("comentarios");
-        
-        $comments.innerHTML = `<div id="comentarios">`;
-        profile.comments.forEach(element => {
-            $comments.innerHTML += `<h1>Comentário</h1>`;
-        });
-        $comments.innerHTML += `</div>`;
+        if (profile.commentsIDs.length > 0)
+            init_comments(userID);
         
         // o profile retornado acima é um objeto com os atributos:
         // id (discID)
@@ -269,18 +271,58 @@ async function init(){
         // likeCount (total de likes)
         // grades (hashmap de ID de usuário pra nota)
         // grade (média das notas)
-        // comments (lista de comentários, cada um é um objeto também)
-        
-        // o objeto comentário tem os atributos:
-        // ID (id único do comentário, gerado pelo back)
-        // userID (id do usuário que fez o comentário)
-        // comment (comentário em string, vazio em deletados)
-        // parentCommentID (id do comentário pai; -1 se não tem pai)
-        // date (data do comentário)
-        // deleted (comentário foi deletado)
+        // commentsIDs (lista de ids de comentários)
     }
     catch (e) {
         // fazer alguma coisa com o erro
+        console.log(e);
+    }
+}
+
+async function init_comments(userID) {
+    // o objeto comentário tem os atributos:
+    // ID (id único do comentário, gerado pelo back)
+    // userID (id do usuário que fez o comentário)
+    // userName (nome do usuário que fez o comentário)
+    // comment (comentário em string, vazio em deletados)
+    // parentCommentID (id do comentário pai; -1 se não tem pai)
+    // date (data do comentário)
+    // dateString (data do comentário)
+    // deleted (comentário foi deletado)
+    
+    let comments = await getCourseComments(getVariable('discID'));
+    console.log(comments);
+
+    let $comments = document.getElementById("comentarios");
+    $comments.innerHTML =
+    `<div id="comentarios">`;
+	comments.forEach(comm => {
+        if (!comm.deleted) {
+            $comments.innerHTML += 
+            `<div class="row">
+                <h4>${comm.userName} - ${comm.dateString}</h4>
+                <p>${comm.comment}</p>`;
+            
+            if (comm.userID == userID)
+                $comments.innerHTML += `<a class="botao-comum" id="botao-deletar">Deletar comentário</a>`;
+
+            $comments.innerHTML += `</div>`;
+            $comments.innerHTML += `<hr>`;
+        }
+    });
+    $comments.innerHTML += `</div>`;
+}
+
+async function userNameFromID(id) {
+    try{
+        let response = await fetch('https://projeto-psoft-igor-victor.herokuapp.com/api/v1/auth/withID?id=' + id);
+        
+        if (response.status != 200)
+            darErro();
+        else {
+            return response.text();
+        }
+    }catch (e){
         console.log(e);
     }
 }

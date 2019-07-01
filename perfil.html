@@ -15,7 +15,6 @@
         <p id="id-disciplina"></p><br>
         <p id="likes-disciplina"></p><br>
         <p id="nota-disciplina"></p>
-        
     </div>
 
     <a class="botao-comum" id="meu-like"></a>
@@ -28,7 +27,18 @@
         </form>
     </div>
     
-    <div id="comentarios"></div>
+    <div class="cartao-disciplina">
+        <form action="javascript:void(0);">
+        <h3>Adicionar Comentário</h3>
+        <textarea name="comment-input" id="comment-area" cols="60" rows="6" placeholder="Escreva seu comentário aqui"></textarea>
+        <p class="submit" style="display: block; margin: 8px 0px 0px 400px;"><input type="submit" id="enviar-comentario" value="Enviar"></p>
+        </form>
+    </div>
+    
+    <div class="cartao-disciplina">
+        <h3>Comentários</h1>	
+        <div id="comentarios"></div>
+    </div>
     
     <a href="disciplinas.html" class="botao-comum">Voltar para disciplinas</a>
 </body>
