@@ -191,7 +191,7 @@ async function sendcomment_click() {
         zero_comments();
 }
 
-document.getElementById("enviar-comentario").addEventListener("click", deletecomment_click, false);
+document.getElementById("enviar-comentario").addEventListener("click", putComment_click, false);
 
 
 // 
@@ -212,7 +212,6 @@ async function deletecomment_click(commentID) {
         zero_comments();
 }
 
-document.getElementById("enviar-comentario").addEventListener("click", sendcomment_click, false);
 
 
 async function putComment(discID, userID, userName, comment, parentCommentID) {
