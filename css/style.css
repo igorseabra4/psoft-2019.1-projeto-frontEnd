@@ -127,4 +127,9 @@ body {
     text-shadow: 0 1px #2a85a1;
     font-size: 14px;
     margin: 8px;
+    z-index: 999;
+    position: sticky;
+    width: 100%;
+    background-color: inherit;
+    top: 0;
 }
