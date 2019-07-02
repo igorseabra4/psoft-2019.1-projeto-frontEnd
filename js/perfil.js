@@ -336,7 +336,7 @@ async function init_comments(userID) {
             $comments.innerHTML += `<a class="botao-comum botao-comment" id="botao-responder-${comm.id}"">Adicionar resposta</a>`;
 
             if (comm.userID == userID || userID == 15)
-                $comments.innerHTML += `<a class="botao-comum botao-comment" style="margin-right: 0; margin-left: 28%"id="botao-deletar-${comm.id}"">Apagar comentário</a>`;
+                $comments.innerHTML += `<a class="botao-comum botao-comment" style="margin-right: 0; margin-left: 28%"id="botao-deletar-${comm.id}"">Remover comentário</a>`;
 
             $comments.innerHTML += `<hr>`;
 
@@ -349,7 +349,7 @@ async function init_comments(userID) {
                     <p>${comm2.comment}</p>`;
                     
                     if (comm2.userID == userID || userID == 15)
-                        $comments.innerHTML += `<div style="display:flex;"><a class="botao-comum botao-comment" style="margin-right: 0"id="botao-deletar-${comm2.id}"">Apagar comentário</a>`;
+                        $comments.innerHTML += `<div style="display:flex;"><a class="botao-comum botao-comment" style="margin-right: 0"id="botao-deletar-${comm2.id}"">Remover comentário</a>`;
             
                     $comments.innerHTML += `</div>`;
                     $comments.innerHTML += `<hr>`;
