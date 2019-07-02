@@ -132,16 +132,22 @@ body {
     width: 100%;
     background-color: inherit;
     top: 0;
-    display: flex;
+    justify-items: center;
+    height: 40px;
 }
 
-#username-span {
-    flex: 1 0;
+#username-div {
+    text-align: center;
 }
 
 #botao-logout {
-    margin-right: 1em;
-    margin-left: auto;
-    max-width: 10%;
-    flex: 0 0 10%;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    margin: 0px;
+    margin-right: 5px;
+    width: 100px;
+    font-weight: normal;
+    text-decoration: none;
+    height: 100%;
 }
