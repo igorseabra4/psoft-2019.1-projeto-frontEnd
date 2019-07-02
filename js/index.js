@@ -23,11 +23,13 @@ async function sendLogin(user){
         if (response.status == 200) {
             localStorage.setItem('token', json.token);
             localStorage.setItem('userID', json.userID);
+            localStorage.setItem('userName', json.userName);
             window.location = 'disciplinas.html';
         }
         else {
             localStorage.removeItem('token');
             localStorage.removeItem('userID');
+            localStorage.removeItem('userName');
             alert(json.message);
         }
     }

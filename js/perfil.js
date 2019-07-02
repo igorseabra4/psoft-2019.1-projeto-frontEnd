@@ -83,7 +83,7 @@ async function like_click() {
     `<p id="likes-disciplina">Curtidas: ${profile.likeCount}</p>`;
 }
 
-document.getElementById("meu-like").addEventListener("click", like_click, false);
+document.getElementById("meu-like").addEventListener("click", like_click);
 
 function set_button_liked() {
     document.getElementById("meu-like").innerHTML = `<a id="meu-like">Remover minha curtida</a>`
@@ -151,7 +151,7 @@ async function sendgrade_click() {
     }
 }
 
-document.getElementById("enviar-nota").addEventListener("click", sendgrade_click, false);
+document.getElementById("enviar-nota").addEventListener("click", sendgrade_click);
 
 async function putGrade(discID, userID, grade) {
     await fetch(urlbase + discID + '/grade', {
@@ -182,14 +182,18 @@ async function sendcomment_click() {
     let userName = await userNameFromID(userID);
     
     await putComment(discID, userID, userName, comment, currentParent);
-        
-    currentParent = -1;
-    document.getElementById("em-resposta-a").innerHTML = `<h5 id="em-resposta-a"></h5>`
+
+    cancelar_resposta();
 
     init_comments(userID);
 }
 
-document.getElementById("enviar-comentario").addEventListener("click", sendcomment_click, false);
+function cancelar_resposta(){
+    currentParent = -1;
+    document.getElementById("em-resposta-a").innerHTML = `<h5 id="em-resposta-a"></h5>`
+}
+
+document.getElementById("enviar-comentario").addEventListener("click", sendcomment_click);
 
 async function putComment(discID, userID, userName, comment, parentCommentID) {
     await fetch(urlbase + discID + '/comment', {
@@ -251,8 +255,13 @@ let currentParent = -1;
 
 async function respondercomment_click(id, title){
     currentParent = id;
-    document.getElementById("em-resposta-a").innerHTML = `<h5 id="em-resposta-a">Em resposta a: ${title}</h5>`
+    document.getElementById("em-resposta-a").innerHTML =
+    `<h5 id="em-resposta-a">Em resposta a: ${title}</h5>
+    <a class="botao-comum cancel-comment" id="botao-cancelar-resposta">Cancelar Resposta</a>`
     document.getElementById("em-resposta-a").scrollIntoView();
+    document.getElementById("botao-cancelar-resposta").addEventListener("click", function(){
+        cancelar_resposta();
+    })
 }
 
 // main functions
@@ -321,13 +330,13 @@ async function init_comments(userID) {
         if (!comm.deleted && comm.parentCommentID == -1) {
             $comments.innerHTML += 
             `<div class="row">
-                <h4>${comm.userName} - ${comm.dateString}</h4>
+                <h4>${comm.userName} - ${format_date(comm.date)}</h4>
                 <p>${comm.comment}</p>`;
             
             $comments.innerHTML += `<a class="botao-comum botao-comment" id="botao-responder-${comm.id}"">Adicionar resposta</a>`;
 
             if (comm.userID == userID || userID == 15)
-                $comments.innerHTML += `<a class="botao-comum botao-comment" style="margin-left: 64px"id="botao-deletar-${comm.id}"">Apagar comentário</a>`;
+                $comments.innerHTML += `<a class="botao-comum botao-comment" style="margin-right: 0; margin-left: 28%"id="botao-deletar-${comm.id}"">Apagar comentário</a>`;
 
             $comments.innerHTML += `<hr>`;
 
@@ -335,8 +344,8 @@ async function init_comments(userID) {
                 if (!comm2.deleted && comm2.parentCommentID == comm.id) {
                     $comments.innerHTML += 
                     `<div class="row" style="margin-left: 50px;">
-                    <h4>${comm2.userName} - ${comm2.dateString}</h4>
-                    <h5>Em resposta a ${comm.userName} - ${comm.dateString}</h5>
+                    <h4>${comm2.userName} - ${format_date(comm2.date)}</h4>
+                    <h5>Em resposta a ${comm.userName} - ${format_date(comm.date)}</h5>
                     <p>${comm2.comment}</p>`;
                     
                     if (comm2.userID == userID || userID == 15)
@@ -362,8 +371,8 @@ async function init_comments(userID) {
                 
                 if (botaoResponder !== null)
                 botaoResponder.addEventListener("click", function(){
-                    respondercomment_click(comm.id, `${comm.userName} - ${comm.dateString}`);
-                }, false);
+                    respondercomment_click(comm.id, `${comm.userName} - ${format_date(comm.date)}`);
+                });
             }
 
             if (comm.userID == userID || userID == 15) {
@@ -372,7 +381,7 @@ async function init_comments(userID) {
                 if (botaoDeletar !== null)
                 botaoDeletar.addEventListener("click", function(){
                     deletecomment_click(comm.id);
-                }, false);
+                });
             }
         }
     });
@@ -393,6 +402,19 @@ async function userNameFromID(id) {
     }catch (e){
         console.log(e);
     }
+}
+
+function format_date(date) {
+    let dateTime = new Date(date);
+    return pad(dateTime.getDate(), 2) + "/" + pad(dateTime.getMonth() + 1, 2) + "/" + dateTime.getFullYear() + " às " +
+        pad(dateTime.getHours(), 2) + ":" + pad(dateTime.getMinutes(), 2) + ":" + pad(dateTime.getSeconds(), 2);
+}
+
+// por que javascript nao tem essa funcao?
+function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
 }
 
 init();
