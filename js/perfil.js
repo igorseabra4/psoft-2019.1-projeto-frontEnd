@@ -179,13 +179,18 @@ async function sendcomment_click() {
     let discID = getVariable('discID');
     let userID = localStorage.getItem('userID');
     let comment = document.getElementById('comment-area').value;
-    let userName = await userNameFromID(userID);
+
+    if (comment == "")
+        alert("Comentário não pode ser vazio! Por favor digite um comentário.");
+    else{
+        let userName = await userNameFromID(userID);
+        
+        await putComment(discID, userID, userName, comment, currentParent);
     
-    await putComment(discID, userID, userName, comment, currentParent);
-
-    cancelar_resposta();
-
-    init_comments(userID);
+        cancelar_resposta();
+    
+        init_comments(userID);
+    }
 }
 
 function cancelar_resposta(){
