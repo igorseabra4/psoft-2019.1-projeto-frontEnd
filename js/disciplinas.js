@@ -24,6 +24,7 @@ async function get_disciplinas_ranking() {
     if (response.status != 200){
         alert("Houve um erro ao fazer a requisição. Por favor, faça login e tente novamente.");
             localStorage.removeItem('token');
+            localStorage.removeItem('userName');
             localStorage.removeItem('userID');
             window.location = 'index.html';
     }

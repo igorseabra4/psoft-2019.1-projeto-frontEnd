@@ -128,8 +128,20 @@ body {
     font-size: 14px;
     margin: 8px;
     z-index: 999;
-    position: sticky;
+    position: sticky;   
     width: 100%;
     background-color: inherit;
     top: 0;
+    display: flex;
+}
+
+#username-span {
+    flex: 1 0;
+}
+
+#botao-logout {
+    margin-right: 1em;
+    margin-left: auto;
+    max-width: 10%;
+    flex: 0 0 10%;
 }
