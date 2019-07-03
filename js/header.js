@@ -1,6 +1,6 @@
 let userName = localStorage.getItem("userName");
 
-let buttonHtml = `<button id="botao-logout" onclick="logout()" class="botao-comum">Logout</button>`
+let buttonHtml = `<button class="botao-comum" id="botao-logout" onclick="logout()" class="botao-comum">Logout</button>`
 
 if (userName !== null && userName !== undefined)
     document.getElementById("username-header").innerHTML =
